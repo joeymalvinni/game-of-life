@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <string.h>
 #include <sys/ioctl.h>
 
 #define DEAD ' '
@@ -76,8 +77,9 @@ void init_grid() {
 void print_grid() {
     for (int y = 0; y < HEIGHT; ++y) {
         for (int x = 0; x < WIDTH; ++x) {
-			if (grid[y][x] != dead) {
-				move_to(y, x);
+			if (grid[y][x] == dead) {
+				printf("%c%c", DEAD, DEAD);
+			} else {
 				int n = count_neighbors(y, x);
 				if (n < 2) {
 					// underpopulation
@@ -89,6 +91,7 @@ void print_grid() {
 					// overpopulation 
 					printf("\x1b[35m");
 				}
+
 				printf(ALIVE);
 				printf(ALIVE);
 				printf("\x1b[0m");
@@ -130,11 +133,6 @@ void init_terminal_size() {
     HEIGHT = w.ws_row;
 }
 
-void on_exit() {
-	show_cursor();
-	free_grids();
-}
-
 int main() {
 	init_terminal_size();
     init_grid();
@@ -147,10 +145,9 @@ int main() {
 		move_home();
 		clear_screen();
 		print_grid();
-		usleep(100 * 1000); // 100 milliseconds
+		usleep(100 * 1000); 
 		next();
 	}
 
-	show_cursor();
     return 0;
 }
