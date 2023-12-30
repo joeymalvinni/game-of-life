@@ -38,7 +38,7 @@ void show_cursor() {
 }
 
 void move_home() {
-	printf("\x1b[0;0H]");
+	printf("\x1b[0;0H");
 }
 
 int count_neighbors(int row, int col) {
