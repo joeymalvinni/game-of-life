@@ -30,5 +30,10 @@ Run the code:
 make run
 ```
 
+## Todo
+- [ ] Write all data to a string and print that instead of individually printing blocks
+- [x] Stop screen jittering
+- [x] Extra closing bracket is printed occasionally `]`
+
 ## License
 [MIT License](LICENSE)
