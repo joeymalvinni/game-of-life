@@ -1,7 +1,8 @@
 # Conway's Game of Life
 
 Simple implementation of Conway's Game of Life, a two-dimensional cellular automaton.
-
+<br><br>
+<img width="1000" alt="image" src="https://github.com/joeymalvinni/game-of-life/assets/76851062/28dff462-b5c5-447d-9b56-f7e9d4d91c6d">
 
 ## Rules
 
@@ -15,5 +16,19 @@ Simple implementation of Conway's Game of Life, a two-dimensional cellular autom
 
 Clone the github repository:
 ```
-git clone 
+git clone https://github.com/joeymalvinni/game-of-life.git
 ```
+
+Compile the code:
+```
+make
+```
+
+Run the code:
+
+```
+make run
+```
+
+## License
+[MIT License](LICENSE)
