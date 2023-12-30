@@ -16,15 +16,6 @@ typedef enum {
 cell_t** grid;
 cell_t** new_grid;
 
-void free_grids() {
-	for (int i = 0; i < HEIGHT; ++i) {
-		free(grid[i]);
-		free(new_grid[i]);
-	}
-	free(grid);
-	free(new_grid);
-}
-
 void clear_screen() {
 	printf("\x1b[2J");
 }
@@ -39,6 +30,19 @@ void show_cursor() {
 
 void move_home() {
 	printf("\x1b[0;0H");
+}
+
+void move_to(int row, int col) {
+	printf("\x1b[%d;%dH", row + 1, col * 2 + 1);
+}
+
+void free_grids() {
+	for (int i = 0; i < HEIGHT; ++i) {
+		free(grid[i]);
+		free(new_grid[i]);
+	}
+	free(grid);
+	free(new_grid);
 }
 
 int count_neighbors(int row, int col) {
@@ -72,9 +76,8 @@ void init_grid() {
 void print_grid() {
     for (int y = 0; y < HEIGHT; ++y) {
         for (int x = 0; x < WIDTH; ++x) {
-			if (grid[y][x] == dead) {
-				printf("%c%c", DEAD, DEAD);
-			} else {
+			if (grid[y][x] != dead) {
+				move_to(y, x);
 				int n = count_neighbors(y, x);
 				if (n < 2) {
 					// underpopulation
@@ -92,8 +95,12 @@ void print_grid() {
 			}
         }
 
-        printf("\n");
+		if (y < HEIGHT - 1) {
+			printf("\n");
+		}
     }
+
+	fflush(stdout);
 }
 
 void next() {
@@ -137,8 +144,8 @@ int main() {
 	atexit(show_cursor);
 
 	while (1) {
-		clear_screen();
 		move_home();
+		clear_screen();
 		print_grid();
 		usleep(100 * 1000); // 100 milliseconds
 		next();
